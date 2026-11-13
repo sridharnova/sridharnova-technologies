@@ -1,0 +1,117 @@
+
+@import "tailwindcss";
+@import "@heroui/styles";
+
+/* Enable Tailwind dark: variants using the .dark class */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* SridharNova brand colours */
+:root {
+  --brand-purple: #bd45ec;
+  --brand-blue: #4938f5;
+  --brand-cyan: #00d8d5;
+
+  --brand-gradient: linear-gradient(
+    110deg,
+    #bd45ec 0%,
+    #4938f5 50%,
+    #00d8d5 100%
+  );
+
+  /* Light theme */
+  --background: #ffffff;
+  --foreground: #080811;
+  --surface: #f7f7fb;
+  --surface-secondary: #eeeeF5;
+  --border: #e5e5ed;
+  --muted: #686879;
+}
+
+/* Dark theme */
+.dark {
+  --background: #080811;
+  --foreground: #ffffff;
+  --surface: #11111f;
+  --surface-secondary: #191929;
+  --border: #29293c;
+  --muted: #a2a2b5;
+}
+
+/* Expose brand colours to Tailwind */
+@theme inline {
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-cyan: var(--brand-cyan);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+}
+
+/* Global styling */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--brand-purple);
+  color: #ffffff;
+}
+
+.gradient-text {
+  background: var(--brand-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.gradient-background {
+  background: var(--brand-gradient);
+}
+
+.container-width {
+  width: min(100% - 40px, 1240px);
+  margin-inline: auto;
+}
+
+img {
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
