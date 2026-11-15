@@ -4,9 +4,10 @@ import HeroSection from "@/components/sections/HeroSection";
 import BrandMarquee from "@/components/sections/BrandMarquee";
 import AboutSection from "@/components/sections/AboutSection";
 import ServicesSection from "@/components/sections/ServicesSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import TechnologiesSection from "@/components/sections/TechnologiesSection";
 import PortfolioSection from "@/components/sections/PortfolioSection";
 import WhyChooseUsSection from "@/components/sections/WhyChooseUsSection";
-import ContactSection from "@/components/sections/ContactSection";
 import Footer from "@/components/layout/Footer";
 
 export default function Home() {
@@ -17,9 +18,10 @@ export default function Home() {
       <BrandMarquee />
       <AboutSection />
       <ServicesSection />
+      <TestimonialsSection />
+      <TechnologiesSection />
       <PortfolioSection />
       <WhyChooseUsSection />
-      <ContactSection />
       <Footer />
     </main>
   );

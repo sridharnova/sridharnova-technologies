@@ -1,319 +1,304 @@
-
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import {
-  Target,
-  Palette,
-  Code2,
-  Headphones,
-  Search,
+  ArrowUpRight,
+  Check,
+  Compass,
+  Handshake,
   Lightbulb,
-  Rocket,
-  CheckCircle2,
-  ArrowRight,
+  MessageCircle,
+  ShieldCheck,
+  Sparkles,
+  Target,
 } from "lucide-react";
-import TypingHeading from "@/components/common/TypingHeading";
 
-const benefits = [
-  {
-    icon: Target,
-    title: "Business-Focused Solutions",
-    description:
-      "We understand your business goals and build digital solutions designed to create real value and support your growth.",
-  },
-  {
-    icon: Palette,
-    title: "Creative & Modern Design",
-    description:
-      "We create clean, modern, and user-friendly experiences that make your brand stand out.",
-  },
-  {
-    icon: Code2,
-    title: "Technology That Fits",
-    description:
-      "From websites to custom dashboards, we choose the right technologies for your business requirements.",
-  },
-  {
-    icon: Headphones,
-    title: "Reliable Support",
-    description:
-      "Our relationship does not end at launch. We are here to support, improve, and grow with your business.",
-  },
-];
-
-const processSteps = [
+const reasons = [
   {
     number: "01",
-    icon: Search,
-    title: "Discover",
+    icon: Target,
+    title: "Built around your goals",
     description:
-      "We start by understanding your business, goals, challenges, and project requirements.",
-    detail: "Understand your vision",
+      "We begin by understanding your business, challenges and ambitions. Every decision is guided by what matters to your success.",
+    tags: ["Business-focused", "Purpose-driven"],
   },
   {
     number: "02",
     icon: Lightbulb,
-    title: "Design",
+    title: "Thoughtful, tailored solutions",
     description:
-      "We transform your ideas into creative layouts and user-friendly experiences.",
-    detail: "Plan the experience",
+      "No one-size-fits-all approach. We create digital solutions shaped around your requirements, customers and future growth.",
+    tags: ["Custom-built", "Scalable"],
   },
   {
     number: "03",
-    icon: Code2,
-    title: "Develop",
+    icon: MessageCircle,
+    title: "Clear communication",
     description:
-      "We build responsive, secure, and scalable digital solutions using the right technology.",
-    detail: "Bring ideas to life",
+      "Stay informed and involved throughout the journey with honest conversations, clear updates and collaborative decisions.",
+    tags: ["Transparent", "Collaborative"],
   },
   {
     number: "04",
-    icon: Rocket,
-    title: "Deliver",
+    icon: ShieldCheck,
+    title: "Quality beyond launch",
     description:
-      "We test, launch, and support your solution so your business can move forward.",
-    detail: "Launch with confidence",
+      "We focus on more than delivery. Usability, reliability and maintainability matter just as much as the final launch.",
+    tags: ["Quality-focused", "Growth-ready"],
   },
 ];
 
+const commitments = [
+  "A solution shaped around your business",
+  "A clear and collaborative development journey",
+  "Technology selected with purpose",
+  "A partner focused on long-term value",
+];
+
 export default function WhyChooseUsSection() {
-  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
-      id="why-us"
-      className="relative overflow-hidden bg-background py-24 md:py-32"
+      id="why-choose-us"
+      className="relative overflow-clip bg-background py-10 sm:py-10 lg:py-12"
     >
-      {/* Background decoration */}
-      <div className="pointer-events-none absolute -left-40 top-20 h-80 w-80 rounded-full bg-brand-purple/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-40 bottom-20 h-80 w-80 rounded-full bg-brand-cyan/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -left-40 top-20 h-[420px] w-[420px] rounded-full bg-brand-gold/[0.07] blur-[130px]" />
+      <div className="pointer-events-none absolute -right-40 bottom-0 h-[380px] w-[380px] rounded-full bg-brand-gold/[0.06] blur-[120px]" />
 
-      <div className="container-width relative z-10">
-        {/* Why Choose Us */}
-        <div className="mx-auto max-w-5xl text-center">
-          <motion.span
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
+      <div className="container-width relative">
+        {/* Introduction */}
+        <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end lg:gap-20">
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full border border-brand-purple/30 bg-brand-purple/10 px-4 py-2 text-sm font-semibold text-brand-purple"
+            transition={{ duration: 0.7 }}
           >
-            <span className="h-2 w-2 rounded-full bg-brand-cyan" />
-            WHY SRIDHARNOVA
-          </motion.span>
+            <div className="mb-7 flex items-center gap-3">
+              <span className="h-px w-10 bg-brand-gold" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-brand-gold">
+                The SridharNova difference
+              </span>
+            </div>
 
-          <h2 className="mt-6 text-4xl leading-tight font-bold tracking-tight md:text-5xl">
-            More Than Technology. {" "}
-            <TypingHeading
-              text="A Partner in Growth."
-              speed={55}
-              className="gradient-text"
-            />
-          </h2>
-
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-muted md:text-lg">
-            We combine creativity, technology, and business understanding to
-            build digital experiences that help businesses move forward.
-          </p>
-        </div>
-
-        {/* Benefits cards */}
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {benefits.map((benefit, index) => {
-            const Icon = benefit.icon;
-
-            return (
-              <motion.div
-                key={benefit.title}
-                initial={
-                  shouldReduceMotion
-                    ? false
-                    : { opacity: 0, y: 45, scale: 0.95 }
-                }
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.65,
-                  delay: index * 0.12,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                whileHover={
-                  shouldReduceMotion ? undefined : { y: -8, scale: 1.02 }
-                }
-                className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-7 transition-colors duration-300 hover:border-brand-purple/60 hover:shadow-[0_15px_45px_rgba(189,69,236,0.12)]"
-              >
-                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-brand-purple/10 blur-3xl transition-all duration-500 group-hover:bg-brand-cyan/20" />
-
-                <motion.div
-                  whileHover={
-                    shouldReduceMotion
-                      ? undefined
-                      : { rotate: 12, scale: 1.12 }
-                  }
-                  transition={{ duration: 0.3 }}
-                  className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-brand-purple/10 text-brand-purple transition-colors duration-300 group-hover:bg-brand-purple group-hover:text-white"
-                >
-                  <Icon size={27} strokeWidth={1.8} />
-                </motion.div>
-
-                <h3 className="relative text-xl font-bold text-foreground">
-                  {benefit.title}
-                </h3>
-
-                <p className="relative mt-3 text-sm leading-7 text-muted">
-                  {benefit.description}
-                </p>
-
-                <div className="mt-6 h-1 w-10 rounded-full bg-brand-gradient transition-all duration-500 group-hover:w-20" />
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* How We Work */}
-        <div className="mt-32">
-          <div className="mx-auto max-w-3xl text-center">
-            <motion.span
-              initial={shouldReduceMotion ? false : { opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 rounded-full border border-brand-cyan/30 bg-brand-cyan/10 px-4 py-2 text-sm font-semibold text-brand-cyan"
-            >
-              <span className="h-2 w-2 rounded-full bg-brand-purple" />
-              OUR PROCESS
-            </motion.span>
-
-            <h2 className="mt-6 text-3xl leading-tight font-bold tracking-tight md:text-5xl">
-              From Your Idea to {""}
-              <TypingHeading
-                text="Digital Reality."
-                speed={55}
-                className="gradient-text"
-              />
+            <h2 className="max-w-[650px] text-[clamp(2.7rem,5.4vw,5rem)] font-semibold leading-[1.02] tracking-[-0.065em] text-foreground">
+              Not just a service.
+              <br />
+              <span className="text-brand-gold">A partner in progress.</span>
             </h2>
+          </motion.div>
 
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-muted md:text-lg">
-              A simple and transparent process that turns your vision into a
-              powerful digital solution.
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="max-w-[570px] lg:justify-self-end"
+          >
+            <p className="text-lg leading-8 text-muted sm:text-xl">
+              Great technology starts with understanding people. We bring
+              thoughtful strategy, purposeful design and reliable development
+              together to create solutions that move your business forward.
             </p>
+
+            <Link
+              href="#contact"
+              className="group mt-7 inline-flex items-center gap-3 text-sm font-semibold text-foreground transition-colors hover:text-brand-gold"
+            >
+              Let&apos;s talk about your goals
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-border transition-all duration-300 group-hover:border-brand-gold group-hover:bg-brand-gold group-hover:text-white">
+                <ArrowUpRight
+                  size={16}
+                  className="transition-transform duration-300 group-hover:rotate-45"
+                />
+              </span>
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Sticky stacking cards */}
+
+        {/* Two-pair scroll cards */}
+        <div className="relative mt-20 sm:mt-24">
+          <div className="mb-8 flex items-center justify-between">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-muted">
+              Why partner with us
+            </span>
+            <span className="text-xs text-muted">
+              Four reasons. One partnership.
+            </span>
           </div>
 
-          {/* Process cards */}
-          <div className="relative mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {/* Connecting line on desktop */}
-            <div className="pointer-events-none absolute left-[12%] right-[12%] top-12 hidden h-px bg-linear-to-r from-brand-purple/20 via-brand-blue/60 to-brand-cyan/20 lg:block" />
-
-            {processSteps.map((step, index) => {
-              const Icon = step.icon;
-
-              return (
+          <div className="grid gap-6 lg:grid-cols-2">
+            {[reasons.slice(0, 2), reasons.slice(2, 4)].map(
+              (pair, pairIndex) => (
                 <motion.div
-                  key={step.number}
-                  initial={
-                    shouldReduceMotion
-                      ? false
-                      : { opacity: 0, y: 55, scale: 0.94 }
-                  }
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true, amount: 0.25 }}
+                  key={pairIndex}
+                  initial={{ opacity: 0, y: 110 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
                   transition={{
-                    duration: 0.7,
-                    delay: index * 0.16,
+                    duration: 0.9,
+                    delay: pairIndex * 0.2,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  whileHover={
-                    shouldReduceMotion ? undefined : { y: -10, scale: 1.02 }
-                  }
-                  className="group relative rounded-2xl border border-border bg-surface p-7 transition-colors duration-300 hover:border-brand-purple/60 hover:shadow-[0_18px_50px_rgba(73,56,245,0.14)]"
+                  className="grid content-start gap-6"
                 >
-                  {/* Number and icon */}
-                  <div className="relative z-10 flex items-center justify-between">
-                    <motion.div
-                      whileHover={
-                        shouldReduceMotion
-                          ? undefined
-                          : { rotate: 12, scale: 1.12 }
-                      }
-                      transition={{ duration: 0.35 }}
-                      className="flex h-16 w-16 items-center justify-center rounded-2xl border border-brand-purple/20 bg-background text-brand-purple shadow-sm transition-all duration-300 group-hover:border-brand-purple group-hover:bg-brand-purple group-hover:text-white"
-                    >
-                      <Icon size={29} strokeWidth={1.8} />
-                    </motion.div>
+                  {pair.map((reason, index) => {
+                    const Icon = reason.icon;
 
-                    <span className="text-4xl font-black text-brand-purple/15 transition-colors duration-300 group-hover:text-brand-purple/40">
-                      {step.number}
-                    </span>
-                  </div>
+                    return (
+                      <motion.article
+                        key={reason.number}
+                        whileHover={{
+                          y: -8,
+                          transition: { duration: 0.3 },
+                        }}
+                        className="group relative min-h-[300px] overflow-hidden rounded-[26px] border border-border bg-surface p-7 shadow-[0_15px_45px_rgba(0,0,0,0.05)] transition-shadow duration-500 hover:shadow-[0_25px_65px_rgba(0,0,0,0.10)] sm:p-9"
+                      >
+                        <span className="pointer-events-none absolute -right-2 -top-10 text-[150px] font-semibold leading-none tracking-[-0.1em] text-brand-gold/[0.055]">
+                          {reason.number}
+                        </span>
 
-                  {/* Card content */}
-                  <h3 className="mt-8 text-xl font-bold text-foreground transition-colors duration-300 group-hover:text-brand-purple">
-                    {step.title}
-                  </h3>
+                        <div className="relative flex items-center justify-between">
+                          <span className="font-mono text-sm tracking-widest text-brand-gold">
+                            / {reason.number}
+                          </span>
 
-                  <p className="mt-3 text-sm leading-7 text-muted">
-                    {step.description}
-                  </p>
+                          <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-brand-gold/30 bg-brand-gold/[0.08] text-brand-gold transition-all duration-500 group-hover:rotate-[-8deg] group-hover:bg-brand-gold group-hover:text-white">
+                            <Icon size={25} strokeWidth={1.5} />
+                          </div>
+                        </div>
 
-                  {/* Bottom detail */}
-                  <div className="mt-7 flex items-center gap-2 border-t border-border pt-5 text-sm font-semibold text-foreground">
-                    <CheckCircle2
-                      size={17}
-                      className="shrink-0 text-brand-cyan"
-                    />
-                    <span>{step.detail}</span>
-                  </div>
+                        <div className="relative mt-9">
+                          <h3 className="max-w-[420px] text-2xl font-semibold tracking-[-0.045em] text-foreground transition-colors duration-300 group-hover:text-brand-gold sm:text-3xl">
+                            {reason.title}
+                          </h3>
 
-                  {/* Hover arrow */}
-                  <motion.div
-                    initial={false}
-                    animate={
-                      shouldReduceMotion
-                        ? {}
-                        : { x: 0, opacity: 0.5 }
-                    }
-                    whileHover={
-                      shouldReduceMotion ? undefined : { x: 5, opacity: 1 }
-                    }
-                    className="absolute bottom-7 right-7 text-brand-purple"
-                  >
-                    <ArrowRight size={19} />
-                  </motion.div>
+                          <p className="mt-4 max-w-[450px] text-sm leading-7 text-muted">
+                            {reason.description}
+                          </p>
 
-                  {/* Hover gradient line */}
-                  <div className="absolute bottom-0 left-0 h-1 w-0 rounded-full bg-brand-gradient transition-all duration-500 group-hover:w-full" />
+                          <div className="mt-6 flex flex-wrap gap-2">
+                            {reason.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="rounded-full border border-border px-3 py-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-muted"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <motion.div
+                          className="absolute bottom-0 left-0 h-[3px] w-full origin-left bg-brand-gold"
+                          initial={{ scaleX: 0 }}
+                          whileInView={{ scaleX: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.8, delay: 0.2 }}
+                        />
+                      </motion.article>
+                    );
+                  })}
                 </motion.div>
-              );
-            })}
+              ),
+            )}
           </div>
         </div>
 
-        {/* Bottom CTA */}
+        {/* Commitment panel */}
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.7 }}
-          className="mt-24 rounded-3xl border border-brand-purple/20 bg-surface p-8 text-center md:p-12"
+          className="relative mt-20 overflow-hidden rounded-[28px] bg-[#17191E] px-7 py-10 text-white sm:mt-24 sm:px-12 sm:py-14 lg:px-16 lg:py-16"
         >
-          <h3 className="text-2xl font-bold tracking-tight md:text-3xl">
-            Have an idea? Let&apos;s make it happen.
-          </h3>
+          <div className="pointer-events-none absolute -right-20 -top-32 h-80 w-80 rounded-full border border-[#C6A66B]/20" />
+          <div className="pointer-events-none absolute -right-8 -top-20 h-64 w-64 rounded-full border border-[#C6A66B]/15" />
+          <div className="pointer-events-none absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-[#C6A66B]/10 blur-[100px]" />
 
-          <p className="mx-auto mt-4 max-w-xl leading-7 text-muted">
-            Tell us about your project, and let&apos;s create something meaningful
-            for your business.
+          <div className="relative grid gap-12 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:gap-16">
+            <div>
+              <div className="mb-6 flex items-center gap-3">
+                <Sparkles size={17} className="text-[#C6A66B]" />
+                <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C6A66B]">
+                  What you can expect
+                </span>
+              </div>
+
+              <h3 className="!text-white max-w-[550px] text-[clamp(2rem,4vw,3.5rem)] font-semibold leading-[1.08] tracking-[-0.055em]">
+                Your vision deserves
+                <span className="text-[#C6A66B]"> more than ordinary.</span>
+              </h3>
+
+              <p className="mt-6 max-w-[470px] text-sm leading-7 text-white/60 sm:text-base">
+                We believe the best outcomes come from a strong partnership. One
+                built on shared goals, thoughtful decisions and a commitment to
+                doing meaningful work.
+              </p>
+
+              <Link
+                href="#contact"
+                className="group mt-9 inline-flex items-center gap-3 rounded-full bg-[#C6A66B] px-6 py-4 text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-1"
+              >
+                Start a conversation
+                <ArrowUpRight size={17} />
+              </Link>
+            </div>
+
+            <div className="relative">
+              <div className="mb-7 flex items-center gap-3">
+                <Handshake size={19} className="text-[#C6A66B]" />
+                <span className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                  Our commitment
+                </span>
+              </div>
+
+              <div className="space-y-5">
+                {commitments.map((item, index) => (
+                  <motion.div
+                    key={item}
+                    initial={reduceMotion ? false : { opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="flex items-start gap-4 border-b border-white/10 pb-5 last:border-0 last:pb-0"
+                  >
+                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#C6A66B]/15 text-[#C6A66B]">
+                      <Check size={13} strokeWidth={2.5} />
+                    </span>
+                    <p className="text-sm leading-6 text-white/75">{item}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute bottom-5 right-6 hidden text-[#C6A66B]/30 sm:block">
+            <Compass size={42} strokeWidth={0.8} />
+          </div>
+        </motion.div>
+
+        <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs uppercase tracking-[0.18em] text-muted">
+            Thoughtful technology. Meaningful progress.
           </p>
 
-          <a
+          <Link
             href="#contact"
-            className="gradient-background mt-8 inline-flex items-center gap-3 rounded-full px-7 py-4 text-sm font-bold text-white shadow-lg shadow-brand-purple/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-purple/30"
+            className="group inline-flex items-center gap-2 text-sm font-semibold text-foreground transition-colors hover:text-brand-gold"
           >
-            Let&apos;s Discuss Your Project
-            <ArrowRight size={18} />
-          </a>
-        </motion.div>
+            Work with SridharNova
+            <ArrowUpRight
+              size={16}
+              className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+            />
+          </Link>
+        </div>
       </div>
     </section>
   );

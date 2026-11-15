@@ -5,43 +5,83 @@
 /* Enable Tailwind dark: variants using the .dark class */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* SridharNova brand colours */
-:root {
-  --brand-purple: #bd45ec;
-  --brand-blue: #4938f5;
-  --brand-cyan: #00d8d5;
+/* =========================================
+   SRIDHARNOVA TECHNOLOGIES
+   PREMIUM CHARCOAL + CHAMPAGNE GOLD THEME
+========================================= */
 
+:root {
+  color-scheme: light;
+
+  /* Primary brand colours */
+  --brand-charcoal: #17191e;
+  --brand-slate: #343a40;
+  --brand-gold: #c6a66b;
+  --brand-gold-dark: #b08c4d;
+  --brand-ivory: #f4f1ea;
+
+  /* Gold gradient */
   --brand-gradient: linear-gradient(
     110deg,
-    #bd45ec 0%,
-    #4938f5 50%,
-    #00d8d5 100%
+    #b08c4d 0%,
+    #c6a66b 50%,
+    #dfc795 100%
   );
 
   /* Light theme */
-  --background: #ffffff;
-  --foreground: #080811;
-  --surface: #f7f7fb;
-  --surface-secondary: #eeeeF5;
-  --border: #e5e5ed;
-  --muted: #686879;
+  --background: #f4f1ea;
+  --foreground: #17191e;
+
+  --surface: #ffffff;
+  --surface-secondary: #eeebe4;
+
+  --border: #e2ddd3;
+  --muted: #74716b;
+
+  --card-shadow: 0 8px 30px rgba(23, 25, 30, 0.06);
+  --gold-shadow: 0 8px 24px rgba(176, 140, 77, 0.16);
+
+  --navbar-background: rgba(244, 241, 234, 0.88);
 }
 
-/* Dark theme */
+/* =========================================
+   DARK THEME
+========================================= */
+
 .dark {
-  --background: #080811;
-  --foreground: #ffffff;
-  --surface: #11111f;
-  --surface-secondary: #191929;
-  --border: #29293c;
-  --muted: #a2a2b5;
+  color-scheme: dark;
+
+  --background: #17191e;
+  --foreground: #f4f1ea;
+
+  --surface: #22252b;
+  --surface-secondary: #292d34;
+
+  --border: #3a3e45;
+  --muted: #aaa69e;
+
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+  --gold-shadow: 0 8px 24px rgba(198, 166, 107, 0.12);
+
+  --navbar-background: rgba(23, 25, 30, 0.88);
 }
 
-/* Expose brand colours to Tailwind */
+/* =========================================
+   TAILWIND THEME VARIABLES
+   Keep existing brand class names working
+========================================= */
+
 @theme inline {
-  --color-brand-purple: var(--brand-purple);
-  --color-brand-blue: var(--brand-blue);
-  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-charcoal: var(--brand-charcoal);
+  --color-brand-slate: var(--brand-slate);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-dark: var(--brand-gold-dark);
+  --color-brand-ivory: var(--brand-ivory);
+
+  /* Backward-compatible names */
+  --color-brand-purple: var(--brand-gold);
+  --color-brand-blue: var(--brand-slate);
+  --color-brand-cyan: var(--brand-gold-dark);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -51,39 +91,82 @@
   --color-muted: var(--muted);
 }
 
-/* Global styling */
+/* =========================================
+   GLOBAL RESET
+========================================= */
+
 * {
   box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 90px;
+  scroll-padding-top: 100px;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family:
+    "Inter",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
 }
 
-button,
+/* =========================================
+   TYPOGRAPHY
+========================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--foreground);
+  letter-spacing: -0.035em;
+}
+
+p {
+  color: var(--muted);
+  line-height: 1.75;
+}
+
 a {
+  color: inherit;
+  text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 button {
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-::selection {
-  background: var(--brand-purple);
-  color: #ffffff;
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--brand-gold);
+  outline-offset: 3px;
 }
+
+/* =========================================
+   BRAND TEXT & BACKGROUNDS
+========================================= */
 
 .gradient-text {
   background: var(--brand-gradient);
@@ -96,6 +179,23 @@ button {
   background: var(--brand-gradient);
 }
 
+.gold-text {
+  color: var(--brand-gold-dark);
+}
+
+.dark .gold-text {
+  color: var(--brand-gold);
+}
+
+.gold-background {
+  background: var(--brand-gold);
+  color: var(--brand-charcoal);
+}
+
+/* =========================================
+   LAYOUT
+========================================= */
+
 .container-width {
   width: min(100% - 40px, 1240px);
   margin-inline: auto;
@@ -103,7 +203,138 @@ button {
 
 img {
   max-width: 100%;
+  height: auto;
 }
+
+/* =========================================
+   PREMIUM SURFACES
+========================================= */
+
+.premium-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--card-shadow);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--brand-gold);
+  box-shadow: var(--gold-shadow);
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 13px 25px;
+  border: 1px solid var(--brand-gold);
+  border-radius: 8px;
+
+  background: var(--brand-gold);
+  color: var(--brand-charcoal);
+
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.btn-gold:hover {
+  background: var(--brand-gold-dark);
+  border-color: var(--brand-gold-dark);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 13px 25px;
+  border: 1px solid var(--brand-gold);
+  border-radius: 8px;
+
+  background: transparent;
+  color: var(--foreground);
+
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.btn-outline:hover {
+  background: var(--brand-gold);
+  color: var(--brand-charcoal);
+}
+
+/* =========================================
+   NAVBAR
+========================================= */
+
+.navbar-glass {
+  background: var(--navbar-background);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brand-gold-dark);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-gold);
+}
+
+/* =========================================
+   TEXT SELECTION
+========================================= */
+
+::selection {
+  background: var(--brand-gold);
+  color: var(--brand-charcoal);
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .container-width {
+    width: min(100% - 32px, 1240px);
+  }
+
+  html {
+    scroll-padding-top: 80px;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,

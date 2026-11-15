@@ -1,204 +1,574 @@
 
 "use client";
 
+import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import {
+  ArrowDownRight,
   ArrowUpRight,
-  Globe,
-  LayoutDashboard,
   Code2,
+  ShoppingBag,
+  PanelsTopLeft,
+  LayoutDashboard,
   Smartphone,
-  ShoppingCart,
   Cloud,
+  Sparkles,
+  Monitor,
+  Layers3,
 } from "lucide-react";
 
-import TypingHeading from "@/components/common/TypingHeading";
+const rotatingWords = [
+  "digital experiences.",
+  "business platforms.",
+  "smarter solutions.",
+  "ideas into reality.",
+];
 
 const services = [
   {
     number: "01",
-    title: "Website Design",
+    title: "Website Design & Development",
     description:
-      "Beautiful, modern and responsive websites that communicate your brand and turn visitors into customers.",
-    icon: Globe,
-    features: ["Business Websites", "Landing Pages", "Responsive Design"],
+      "Distinctive, responsive websites that communicate your brand, engage visitors and turn interest into meaningful enquiries.",
+    tags: ["Business Websites", "Website Redesign", "Landing Pages", "UI/UX Design"],
+    icon: PanelsTopLeft,
   },
   {
     number: "02",
-    title: "Website Redesign",
+    title: "E-commerce Solutions",
     description:
-      "Transform outdated websites into modern digital experiences with better design, usability and performance.",
-    icon: LayoutDashboard,
-    features: ["UI/UX Improvement", "Modern Layouts", "Performance Focus"],
+      "Online stores built around your products and customers, with smooth shopping journeys and reliable store functionality.",
+    tags: ["Online Stores", "Magento", "Payments", "Store Management"],
+    icon: ShoppingBag,
   },
   {
     number: "03",
-    title: "Custom CRM & Dashboards",
+    title: "Web Applications & Software",
     description:
-      "Manage business operations with custom dashboards, CRM systems and powerful management solutions.",
-    icon: LayoutDashboard,
-    features: ["Admin Dashboards", "CRM Systems", "Data Management"],
+      "Custom digital products designed around your workflows, business requirements and the way your team works.",
+    tags: ["Web Applications", "Custom Software", "API Integration", "Portals"],
+    icon: Code2,
   },
   {
     number: "04",
-    title: "Web Applications",
+    title: "Dashboards & Business Systems",
     description:
-      "Build scalable web applications tailored to your workflows, business processes and customer needs.",
-    icon: Code2,
-    features: ["Custom Applications", "API Integration", "Scalable Solutions"],
+      "Centralised dashboards and management systems that make business information easier to access, understand and manage.",
+    tags: ["Admin Dashboards", "Reporting", "Data Management", "Automation"],
+    icon: LayoutDashboard,
   },
   {
     number: "05",
-    title: "Mobile Applications",
+    title: "Mobile App Development",
     description:
-      "Create intuitive mobile experiences that help your business connect with customers on the go.",
+      "Useful, intuitive mobile experiences that help your customers and teams stay connected wherever they are.",
+    tags: ["Android Apps", "iOS Apps", "Cross-platform", "Mobile UI/UX"],
     icon: Smartphone,
-    features: ["Android Apps", "Cross-platform Apps", "Mobile UI/UX"],
   },
   {
     number: "06",
-    title: "E-commerce Development",
+    title: "Cloud & Technical Support",
     description:
-      "Launch and grow your online store with secure, user-friendly and conversion-focused e-commerce solutions.",
-    icon: ShoppingCart,
-    features: ["Online Stores", "Payment Integration", "Store Customization"],
-  },
-  {
-    number: "07",
-    title: "Hosting & Maintenance",
-    description:
-      "Keep your digital presence running with deployment, hosting setup, updates and ongoing technical support.",
+      "Practical deployment, hosting and ongoing technical support to help keep your digital products accessible and reliable.",
+    tags: ["Cloud Hosting", "AWS", "Deployment", "Maintenance"],
     icon: Cloud,
-    features: ["Website Deployment", "Hosting Setup", "Maintenance"],
   },
 ];
+
+function TypingText() {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [typedText, setTypedText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = rotatingWords[wordIndex];
+    let delay = deleting ? 35 : 75;
+
+    if (!deleting && typedText === currentWord) {
+      delay = 1600;
+    }
+
+    const timeout = window.setTimeout(() => {
+      if (!deleting) {
+        if (typedText.length < currentWord.length) {
+          setTypedText(currentWord.slice(0, typedText.length + 1));
+        } else {
+          setDeleting(true);
+        }
+      } else if (typedText.length > 0) {
+        setTypedText(typedText.slice(0, -1));
+      } else {
+        setDeleting(false);
+        setWordIndex((previous) => (previous + 1) % rotatingWords.length);
+      }
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [typedText, deleting, wordIndex]);
+
+  return (
+    <span className="inline-flex min-h-[1.15em] items-center text-brand-gold">
+      {typedText}
+      <motion.span
+        aria-hidden="true"
+        animate={{ opacity: [1, 0, 1] }}
+        transition={{ duration: 0.85, repeat: Infinity }}
+        className="ml-1 inline-block h-[0.85em] w-[2px] bg-brand-gold"
+      />
+    </span>
+  );
+}
+
+/* 3D tilt surface with cursor-following glow */
+function TiltSurface({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [pointer, setPointer] = useState({ x: 50, y: 50 });
+  const [active, setActive] = useState(false);
+
+  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    setPointer({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+    });
+
+    setTilt({
+      x: ((y / rect.height) - 0.5) * -5,
+      y: ((x / rect.width) - 0.5) * 5,
+    });
+
+    setActive(true);
+  }
+
+  function resetTilt() {
+    setTilt({ x: 0, y: 0 });
+    setActive(false);
+  }
+
+  return (
+    <div
+      onMouseMove={handleMouseMove}
+      onMouseLeave={resetTilt}
+      onFocus={() => setActive(true)}
+      onBlur={resetTilt}
+      className={`group relative h-full ${className}`}
+      style={{
+        perspective: "1100px",
+      }}
+    >
+      <div
+        className="relative h-full overflow-hidden rounded-[inherit] transition-transform duration-200 ease-out"
+        style={{
+          transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {/* Cursor-following gold glow */}
+        <div
+          className="pointer-events-none absolute inset-0 z-20 rounded-[inherit] transition-opacity duration-300"
+          style={{
+            opacity: active ? 1 : 0,
+            background: `radial-gradient(320px circle at ${pointer.x}% ${pointer.y}%, rgba(198,166,107,0.17), transparent 70%)`,
+          }}
+        />
+
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/* Reusable animated icon */
+function FloatingIcon({
+  children,
+  large = false,
+}: {
+  children: ReactNode;
+  large?: boolean;
+}) {
+  return (
+    <motion.div
+      animate={{ y: [0, -7, 0], rotate: [0, 2, 0] }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      whileHover={{ scale: 1.12, rotate: -8 }}
+      className={`relative flex items-center justify-center rounded-2xl border border-brand-gold/25 bg-brand-gold/[0.09] text-brand-gold transition-colors duration-300 group-hover:bg-brand-gold group-hover:text-white ${
+        large ? "h-16 w-16" : "h-14 w-14"
+      }`}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function ServicesSection() {
   return (
     <section
       id="services"
-      className="relative overflow-hidden py-10 md:py-12"
+      className="relative overflow-hidden bg-background py-10 sm:py-10 lg:py-12"
     >
-      <div className="container-width">
+      {/* Background atmosphere */}
+      <div className="pointer-events-none absolute -left-48 top-40 h-[420px] w-[420px] rounded-full bg-brand-gold/[0.06] blur-[130px]" />
 
-        {/* Section Heading */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-48 top-[35%] h-[480px] w-[480px] rounded-full bg-brand-gold/[0.05] blur-[140px]"
+        animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.8, 0.4] }}
+        transition={{ duration: 10, repeat: Infinity }}
+      />
+
+      <div className="container-width relative z-10">
+        {/* Section heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto mb-16 max-w-4xl text-center"
+          viewport={{ once: true, amount: 0.25 }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-16 grid gap-8 lg:mb-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-end"
         >
-          <span className="text-sm font-bold tracking-[0.25em] text-brand-purple uppercase">
-            What We Do
-          </span>
+          <div>
+            <div className="mb-7 flex items-center gap-3">
+              <motion.span
+                initial={{ width: 0 }}
+                whileInView={{ width: 40 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="h-px bg-brand-gold"
+              />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brand-gold">
+                What we do
+              </span>
+            </div>
 
-          <h2 className="mt-5 text-2xl leading-tight font-bold tracking-tight sm:text-3xl md:text-5xl">
-            Digital Solutions{" "}
-            <TypingHeading
-              text="Built for Growth."
-              speed={75}
-              className="gradient-text whitespace-nowrap"
-            />
-          </h2>
+            <h2 className="max-w-[850px] text-[clamp(2.65rem,5.6vw,5.3rem)] font-semibold leading-[1.04] tracking-[-0.065em] text-foreground">
+              We turn ideas into
+              <br />
+              <TypingText />
+            </h2>
+          </div>
 
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-muted md:text-lg">
-            From your first website to powerful custom applications,
-            we provide digital solutions that help your business move forward.
-          </p>
+          <div className="max-w-[470px] lg:justify-self-end">
+            <p className="text-base leading-8 text-muted sm:text-[17px]">
+              From your first website to a complete business platform, we bring
+              design, technology and thoughtful engineering together to create
+              digital solutions that move your business forward.
+            </p>
+
+            <Link
+              href="#contact"
+              className="group mt-7 inline-flex items-center gap-3 text-sm font-semibold text-foreground transition-colors hover:text-brand-gold"
+            >
+              Let&apos;s discuss your project
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-border transition-all duration-300 group-hover:border-brand-gold group-hover:bg-brand-gold group-hover:text-white">
+                <ArrowUpRight size={16} />
+              </span>
+            </Link>
+          </div>
         </motion.div>
 
-        {/* Service Cards */}
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => {
+        {/* Featured full-width service cards */}
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+          {services.slice(0, 2).map((service, index) => {
             const Icon = service.icon;
 
             return (
               <motion.div
                 key={service.number}
-                initial={{ opacity: 0, y: 35 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
+                initial={{ opacity: 0, y: 65, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.2 }}
                 transition={{
-                  duration: 0.55,
-                  delay: (index % 3) * 0.12,
+                  duration: 0.9,
+                  delay: index * 0.15,
+                  ease: [0.22, 1, 0.36, 1],
                 }}
-                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-2 hover:border-brand-purple/60 hover:shadow-xl hover:shadow-brand-purple/5 md:p-8"
+                className="min-h-[370px]"
               >
-                <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand-purple/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                <TiltSurface className="rounded-[28px]">
+                  <div className="relative flex h-full min-h-[370px] flex-col justify-between overflow-hidden rounded-[28px] border border-border bg-surface p-7 transition-colors duration-500 group-hover:border-brand-gold/50 sm:p-10">
+                    {/* Light sweep */}
+                    <motion.div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/3 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/[0.10] to-transparent"
+                      animate={{ x: ["0%", "500%"] }}
+                      transition={{
+                        duration: 7,
+                        repeat: Infinity,
+                        repeatDelay: 3,
+                        ease: "easeInOut",
+                      }}
+                    />
 
-                <div className="relative flex items-center justify-between">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-linear-to-br from-brand-purple/15 to-brand-cyan/15 text-brand-purple transition-all duration-300 group-hover:scale-110 group-hover:from-brand-purple group-hover:to-brand-blue group-hover:text-white">
-                    <Icon size={27} strokeWidth={1.8} />
+                    {/* Animated orbit rings */}
+                    <motion.div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full border border-brand-gold/15"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                    />
+                    <motion.div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-5 -top-10 h-52 w-52 rounded-full border border-brand-gold/20"
+                      animate={{ rotate: -360 }}
+                      transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                    />
+                    <motion.div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-16 top-16 h-2 w-2 rounded-full bg-brand-gold shadow-[0_0_18px_rgba(198,166,107,0.9)]"
+                      animate={{
+                        x: [0, -55, -85, 0],
+                        y: [0, 65, 110, 0],
+                      }}
+                      transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+                    />
+
+                    <div className="relative z-10 flex items-center justify-between">
+                      <FloatingIcon large>
+                        <Icon size={29} strokeWidth={1.5} />
+                      </FloatingIcon>
+
+                      <span className="font-mono text-xs tracking-widest text-muted">
+                        / {service.number}
+                      </span>
+                    </div>
+
+                    <div className="relative z-10 mt-10 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+                      <div className="max-w-[450px]">
+                        <h3 className="text-3xl font-semibold leading-tight tracking-[-0.05em] text-foreground sm:text-4xl">
+                          {service.title}
+                        </h3>
+
+                        <p className="mt-4 max-w-[420px] text-sm leading-7 text-muted sm:text-base">
+                          {service.description}
+                        </p>
+
+                        <div className="mt-6 flex flex-wrap gap-2">
+                          {service.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded-full border border-border px-3 py-1.5 text-[10px] tracking-wide text-muted transition-all duration-300 group-hover:border-brand-gold/30 group-hover:text-foreground"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Animated visual composition */}
+                      <div className="relative hidden h-44 w-44 shrink-0 items-center justify-center sm:flex">
+                        <motion.div
+                          className="absolute h-40 w-40 rounded-full border border-dashed border-brand-gold/30"
+                          animate={{ rotate: 360 }}
+                          transition={{
+                            duration: 25,
+                            repeat: Infinity,
+                            ease: "linear",
+                          }}
+                        />
+
+                        <motion.div
+                          className="absolute h-28 w-28 rounded-full border border-brand-gold/30"
+                          animate={{
+                            scale: [1, 1.18, 1],
+                            opacity: [0.35, 0.8, 0.35],
+                          }}
+                          transition={{ duration: 4, repeat: Infinity }}
+                        />
+
+                        <motion.div
+                          className="relative z-10 flex h-[76px] w-[76px] items-center justify-center rounded-3xl bg-brand-gold text-white shadow-[0_15px_50px_rgba(198,166,107,0.3)]"
+                          animate={{ y: [0, -10, 0], rotate: [0, 5, 0] }}
+                          transition={{
+                            duration: 4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }}
+                        >
+                          <Icon size={34} strokeWidth={1.4} />
+                        </motion.div>
+
+                        <motion.div
+                          className="absolute right-3 top-4 flex h-9 w-9 items-center justify-center rounded-xl border border-brand-gold/20 bg-surface text-brand-gold shadow-lg"
+                          animate={{ y: [0, -8, 0], rotate: [0, 10, 0] }}
+                          transition={{ duration: 3, repeat: Infinity }}
+                        >
+                          <Sparkles size={16} />
+                        </motion.div>
+
+                        <motion.div
+                          className="absolute bottom-3 left-3 flex h-9 w-9 items-center justify-center rounded-xl border border-brand-gold/20 bg-surface text-brand-gold shadow-lg"
+                          animate={{ y: [0, 8, 0], rotate: [0, -10, 0] }}
+                          transition={{ duration: 3.5, repeat: Infinity }}
+                        >
+                          <Layers3 size={16} />
+                        </motion.div>
+                      </div>
+                    </div>
+
+                    <div className="absolute bottom-0 left-10 right-10 h-[2px] origin-left scale-x-0 bg-brand-gold transition-transform duration-700 group-hover:scale-x-100" />
                   </div>
-
-                  <span className="text-sm font-semibold tracking-widest text-muted/60">
-                    / {service.number}
-                  </span>
-                </div>
-
-                <h3 className="relative mt-8 text-xl font-bold md:text-2xl">
-                  {service.title}
-                </h3>
-
-                <p className="relative mt-4 flex-1 text-sm leading-7 text-muted">
-                  {service.description}
-                </p>
-
-                <div className="relative mt-6 flex flex-wrap gap-2">
-                  {service.features.map((feature) => (
-                    <span
-                      key={feature}
-                      className="rounded-full border border-border px-3 py-1.5 text-xs text-muted"
-                    >
-                      {feature}
-                    </span>
-                  ))}
-                </div>
-
-                <Link
-                  href="#contact"
-                  aria-label={`Enquire about ${service.title}`}
-                  className="relative mt-8 inline-flex w-fit items-center gap-2 text-sm font-bold text-foreground transition-colors hover:text-brand-purple"
-                >
-                  Discuss this service
-                  <ArrowUpRight
-                    size={17}
-                    className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                  />
-                </Link>
+                </TiltSurface>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="mt-16 rounded-3xl border border-border bg-surface p-8 text-center md:p-12"
-        >
-          <h3 className="text-2xl font-bold md:text-3xl">
-            Have a project in mind?
-          </h3>
+        {/* Four compact service cards */}
+        <div className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          {services.slice(2).map((service, index) => {
+            const Icon = service.icon;
 
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-muted md:text-base">
-            Let&apos;s discuss your requirements and find the right digital
-            solution for your business.
-          </p>
+            return (
+              <motion.div
+                key={service.number}
+                initial={{ opacity: 0, y: 55 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.8,
+                  delay: index * 0.1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="min-h-[340px]"
+              >
+                <TiltSurface className="rounded-[26px]">
+                  <div className="relative flex h-full min-h-[340px] flex-col overflow-hidden rounded-[26px] border border-border bg-surface p-7 transition-colors duration-500 group-hover:border-brand-gold/50">
+                    {/* Ambient glow */}
+                    <motion.div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -right-20 -top-20 h-52 w-52 rounded-full bg-brand-gold/[0.10] blur-3xl"
+                      animate={{
+                        scale: [0.8, 1.25, 0.8],
+                        opacity: [0.25, 0.7, 0.25],
+                      }}
+                      transition={{
+                        duration: 7 + index,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+
+                    {/* Light sweep */}
+                    <motion.div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -left-1/2 top-0 h-full w-1/3 skew-x-[-20deg] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
+                      animate={{ x: ["0%", "500%"] }}
+                      transition={{
+                        duration: 8 + index,
+                        repeat: Infinity,
+                        repeatDelay: 4,
+                        ease: "easeInOut",
+                      }}
+                    />
+
+                    <div className="relative z-10 flex items-center justify-between">
+                      <FloatingIcon>
+                        <Icon size={25} strokeWidth={1.5} />
+                      </FloatingIcon>
+
+                      <span className="font-mono text-xs text-muted">
+                        / {service.number}
+                      </span>
+                    </div>
+
+                    <div className="relative z-10 mt-9">
+                      <h3 className="text-xl font-semibold leading-tight tracking-[-0.04em] text-foreground">
+                        {service.title}
+                      </h3>
+
+                      <p className="mt-4 text-sm leading-7 text-muted">
+                        {service.description}
+                      </p>
+                    </div>
+
+                    <div className="relative z-10 mt-auto flex items-center justify-between pt-8">
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-brand-gold">
+                        Explore service
+                      </span>
+
+                      <motion.div
+                        whileHover={{ rotate: 45, scale: 1.12 }}
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted transition-colors duration-300 group-hover:border-brand-gold group-hover:bg-brand-gold group-hover:text-white"
+                      >
+                        <ArrowUpRight size={16} />
+                      </motion.div>
+                    </div>
+
+                    <div className="absolute bottom-0 left-7 right-7 h-[2px] origin-left scale-x-0 bg-brand-gold transition-transform duration-500 group-hover:scale-x-100" />
+                  </div>
+                </TiltSurface>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Closing CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+          className="relative mt-8 overflow-hidden rounded-[26px] border border-brand-gold/20 bg-[#202126] px-7 py-9 text-white sm:px-10 lg:flex lg:items-center lg:justify-between lg:px-12"
+        >
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-16 -top-28 h-64 w-64 rounded-full border border-brand-gold/15"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+          />
+
+          <div className="pointer-events-none absolute -right-5 -top-16 h-44 w-44 rounded-full border border-brand-gold/15" />
+
+          <div className="relative z-10">
+            <div className="mb-3 flex items-center gap-2 text-brand-gold">
+              <motion.span
+                animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.15, 1] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                <Sparkles size={15} />
+              </motion.span>
+
+              <span className="text-[10px] font-semibold uppercase tracking-[0.24em]">
+                Have something in mind?
+              </span>
+            </div>
+
+            <h3 className="!text-white text-2xl font-semibold tracking-[-0.04em] sm:text-3xl">
+              Let&apos;s create something meaningful.
+            </h3>
+
+            <p className="mt-3 max-w-xl text-sm leading-7 text-white/60">
+              Tell us what you&apos;re looking to build. We&apos;ll help you explore the
+              right digital solution for your business.
+            </p>
+          </div>
 
           <Link
             href="#contact"
-            className="gradient-background mt-8 inline-flex items-center gap-3 rounded-full px-7 py-4 text-sm font-bold text-white transition-transform hover:scale-105"
+            className="group relative z-10 mt-7 inline-flex shrink-0 items-center gap-3 rounded-full bg-brand-gold px-6 py-4 text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-1 lg:mt-0"
           >
-            Start Your Project
-            <ArrowUpRight size={18} />
+            Start a conversation
+            <ArrowDownRight
+              size={17}
+              className="transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"
+            />
           </Link>
         </motion.div>
-
       </div>
     </section>
   );

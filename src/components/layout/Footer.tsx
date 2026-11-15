@@ -1,224 +1,293 @@
 
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import type { ReactNode } from "react";
 import {
   ArrowRight,
-  ArrowUp,
   ArrowUpRight,
   Mail,
+  MapPin,
+  Phone,
   Sparkles,
 } from "lucide-react";
-import BrandLogo from "@/components/common/BrandLogo";
 
-const quickLinks = [
+const exploreLinks = [
   { label: "Home", href: "#home" },
   { label: "About Us", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Our Projects", href: "#projects" },
-  { label: "Why Choose Us", href: "#why-us" },
-  { label: "Contact", href: "#contact" },
+  { label: "Our Services", href: "#services" },
+  { label: "Our Work", href: "#portfolio" },
+  { label: "Our Process", href: "#process" },
 ];
 
-const services = [
-  "Website Design",
-  "Website Redesign",
-  "Custom Dashboard",
-  "Web Application",
-  "Mobile Application",
-  "E-commerce Development",
-  "Website Hosting",
+const serviceLinks = [
+  { label: "Website Design & Development", href: "#services" },
+  { label: "E-commerce Solutions", href: "#services" },
+  { label: "Web Applications", href: "#services" },
+  { label: "Custom Dashboards", href: "#services" },
+  { label: "Mobile App Development", href: "#services" },
+  { label: "Cloud & Technical Support", href: "#services" },
 ];
+
+const phoneNumber = "+91 96877 30338";
+const whatsappNumber = "919687730338";
+const emailAddress = "info@sridharnova.com";
+
+function FooterLink({
+  label,
+  href,
+}: {
+  label: string;
+  href: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group inline-flex w-fit items-center gap-2 text-sm text-muted transition-colors duration-300 hover:text-brand-gold"
+    >
+      <span>{label}</span>
+      <ArrowUpRight
+        size={13}
+        className="opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:opacity-100"
+      />
+    </Link>
+  );
+}
+
+function ContactItem({
+  icon,
+  label,
+  value,
+  href,
+  external = false,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: string;
+  href: string;
+  external?: boolean;
+}) {
+  return (
+    <motion.a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      whileHover={{ x: 5 }}
+      transition={{ duration: 0.25 }}
+      className="group flex items-start gap-3"
+    >
+      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-secondary text-brand-gold transition-all duration-300 group-hover:border-brand-gold/50 group-hover:bg-brand-gold/10">
+        {icon}
+      </span>
+
+      <span className="min-w-0">
+        <span className="mb-1 block text-[11px] uppercase tracking-[0.16em] text-muted">
+          {label}
+        </span>
+
+        <span className="break-words text-sm font-medium text-foreground transition-colors duration-300 group-hover:text-brand-gold">
+          {value}
+        </span>
+      </span>
+    </motion.a>
+  );
+}
 
 export default function Footer() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
-    <footer className="relative overflow-hidden border-t border-border bg-surface pt-10">
-      {/* Background decoration */}
-      <div className="pointer-events-none absolute -left-40 top-0 h-80 w-80 rounded-full bg-brand-purple/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-brand-cyan/10 blur-[120px]" />
+    <footer className="relative overflow-hidden border-t border-border bg-background text-foreground transition-colors duration-500">
+
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute -right-40 top-0 h-[400px] w-[400px] rounded-full bg-brand-gold/[0.08] blur-[120px]" />
+
+      <div className="pointer-events-none absolute -bottom-40 left-0 h-[350px] w-[350px] rounded-full bg-brand-gold/[0.06] blur-[120px]" />
 
       <div className="container-width relative z-10">
 
-        {/* Top CTA */}
+        {/* Closing CTA */}
         <motion.div
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 35 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="relative -mt-1 overflow-hidden rounded-3xl border border-brand-purple/20 bg-background p-8 shadow-xl shadow-brand-purple/5 md:p-12"
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7 }}
+          className="flex flex-col justify-between gap-8 border-b border-border py-16 sm:py-20 lg:flex-row lg:items-center"
         >
-          <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-purple/10 blur-[90px]" />
-
-          <div className="relative z-10 flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-brand-purple">
-                <Sparkles size={16} />
-                HAVE A PROJECT IN MIND?
-              </span>
-
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                Let&apos;s turn your vision into reality.
-              </h2>
-
-              <p className="mt-4 leading-7 text-muted">
-                Let&apos;s discuss your next digital project and create something
-                that moves your business forward.
-              </p>
+          <div className="max-w-2xl">
+            <div className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-brand-gold">
+              <Sparkles size={15} />
+              <span>Have a project in mind?</span>
             </div>
 
-            <Link
-              href="#contact"
-              className="gradient-background inline-flex shrink-0 items-center gap-3 rounded-full px-7 py-4 text-sm font-bold text-white shadow-lg shadow-brand-purple/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-purple/30"
-            >
-              Start a Project
-              <ArrowRight size={18} />
-            </Link>
+            <h2 className="text-[clamp(2.5rem,5vw,4.5rem)] font-semibold leading-[1.05] tracking-[-0.06em] text-foreground">
+              Let&apos;s build
+              <br />
+              <span className="text-brand-gold">
+                what&apos;s next.
+              </span>
+            </h2>
+
+            <p className="mt-5 max-w-lg text-sm leading-7 text-muted sm:text-base">
+              Have an idea or a business challenge? Let&apos;s turn it into
+              a digital solution that makes a difference.
+            </p>
           </div>
+
+          <Link
+            href="#contact"
+            className="group inline-flex w-fit items-center gap-4 rounded-full bg-brand-gold px-7 py-4 text-sm font-semibold text-white transition-transform duration-300 hover:-translate-y-1"
+          >
+            Start a Project
+
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 group-hover:rotate-45">
+              <ArrowUpRight size={17} />
+            </span>
+          </Link>
         </motion.div>
 
-        {/* Main footer */}
-        <div className="grid gap-12 py-20 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
+        {/* Main footer content */}
+        <div className="grid grid-cols-1 gap-12 py-14 sm:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1.1fr_1.1fr] lg:gap-10 lg:py-16">
 
-          {/* Company information */}
-          <div>
-            <Link href="#home" aria-label="SridharNova Technologies home">
-              <BrandLogo
-                width={220}
-                height={90}
-                className="h-auto w-47.5 object-contain object-left"
-              />
+          {/* Brand */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <Link
+              href="#home"
+              aria-label="SridharNova Technologies home"
+              className="inline-flex"
+            >
+              <span className="relative block h-[85px] w-[300px] sm:h-[100px] sm:w-[340px]">
+                <Image
+                  src="/images/monogram.png"
+                  alt="SridharNova Technologies"
+                  fill
+                  priority
+                  sizes="340px"
+                  className="object-contain object-left "
+                />
+              </span>
             </Link>
 
-            <p className="mt-6 max-w-sm text-sm leading-7 text-muted">
-              We build modern websites, powerful web applications, custom
-              dashboards, and digital experiences that help businesses grow.
+            <p className="mt-5 max-w-[320px] text-sm leading-7 text-muted">
+              We create thoughtful digital experiences, powerful
+              applications and technology solutions that help
+              businesses move forward.
             </p>
 
-            <a
-              href="mailto:info@sridharnova.com"
-              className="mt-6 inline-flex items-center gap-3 text-sm font-semibold text-foreground transition-colors hover:text-brand-purple"
-            >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-brand-purple">
-                <Mail size={17} />
-              </span>
-              info@sridharnova.com
-              <ArrowUpRight size={15} />
-            </a>
-          </div>
+            <div className="mt-6 inline-flex items-center gap-2 text-xs text-muted">
+              <span className="h-2 w-2 rounded-full bg-brand-gold shadow-[0_0_12px_rgba(198,166,107,0.7)]" />
+              Building possibilities through technology.
+            </div>
+          </motion.div>
 
-          {/* Quick links */}
-          <div>
-            <h3 className="text-base font-bold text-foreground">
-              Quick Links
+          {/* Explore */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <h3 className="mb-7 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+              Explore
             </h3>
 
-            <ul className="mt-7 space-y-4">
-              {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="group inline-flex items-center gap-2 text-sm text-muted transition-all duration-300 hover:translate-x-1 hover:text-brand-purple"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-purple/50 transition-colors group-hover:bg-brand-cyan" />
-                    {link.label}
-                  </Link>
-                </li>
+            <div className="flex flex-col items-start gap-4">
+              {exploreLinks.map((link) => (
+                <FooterLink key={link.label} {...link} />
               ))}
-            </ul>
-          </div>
+            </div>
+          </motion.div>
 
           {/* Services */}
-          <div>
-            <h3 className="text-base font-bold text-foreground">
-              Our Services
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <h3 className="mb-7 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+              What We Do
             </h3>
 
-            <ul className="mt-7 space-y-4">
-              {services.map((service) => (
-                <li key={service}>
-                  <Link
-                    href="#services"
-                    className="group inline-flex items-center gap-2 text-sm text-muted transition-all duration-300 hover:translate-x-1 hover:text-brand-purple"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-purple/50 transition-colors group-hover:bg-brand-cyan" />
-                    {service}
-                  </Link>
-                </li>
+            <div className="flex flex-col items-start gap-4">
+              {serviceLinks.map((link) => (
+                <FooterLink key={link.label} {...link} />
               ))}
-            </ul>
-          </div>
+            </div>
+          </motion.div>
 
-          {/* Contact */}
-          <div>
-            <h3 className="text-base font-bold text-foreground">
-              Let&apos;s Connect
+          {/* Get in Touch */}
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h3 className="mb-7 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+              Get in Touch
             </h3>
 
-            <p className="mt-7 text-sm leading-7 text-muted">
-              Have questions or want to discuss a project? We&apos;d love to hear
-              from you.
-            </p>
-
-            <Link
-              href="#contact"
-              className="group mt-6 inline-flex items-center gap-3 text-sm font-bold text-brand-purple transition-colors hover:text-brand-cyan"
-            >
-              Contact Our Team
-              <ArrowUpRight
-                size={18}
-                className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"
+            <div className="flex flex-col gap-6">
+              <ContactItem
+                icon={<Phone size={17} />}
+                label="Call / WhatsApp"
+                value={phoneNumber}
+                href={`https://wa.me/${whatsappNumber}`}
+                external
               />
-            </Link>
 
-            <div className="mt-9 rounded-2xl border border-border bg-background p-5">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-cyan opacity-60" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-brand-cyan" />
+              <ContactItem
+                icon={<Mail size={17} />}
+                label="Email Us"
+                value={emailAddress}
+                href={`mailto:${emailAddress}`}
+              />
+
+              <div className="flex items-start gap-3">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-surface-secondary text-brand-gold">
+                  <MapPin size={17} />
                 </span>
 
-                <span className="text-xs font-semibold text-foreground">
-                  Let&apos;s build something great
+                <span>
+                  <span className="mb-1 block text-[11px] uppercase tracking-[0.16em] text-muted">
+                    Location
+                  </span>
+
+                  <span className="text-sm leading-6 text-muted">
+                    India
+                    <br />
+                    Working worldwide
+                  </span>
                 </span>
               </div>
-
-              <p className="mt-3 text-xs leading-6 text-muted">
-                Your ideas deserve the right digital partner.
-              </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
-        {/* Bottom footer */}
-        <div className="flex flex-col items-center justify-between gap-5 border-t border-border py-7 text-center sm:flex-row sm:text-left">
-          <p className="text-xs leading-6 text-muted">
-            © SridharNova Technologies. All rights reserved.
+        {/* Bottom bar */}
+        <div className="flex flex-col gap-5 border-t border-border py-7 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-muted">
+            © {new Date().getFullYear()} SridharNova Technologies.
+            All rights reserved.
           </p>
 
           <div className="flex items-center gap-6">
+            <span className="text-xs text-muted">
+              Designed with purpose. Built with technology.
+            </span>
+
             <Link
               href="#home"
-              className="text-xs font-medium text-muted transition-colors hover:text-brand-purple"
-            >
-              Back to Home
-            </Link>
-
-            <button
-              type="button"
-              onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior: shouldReduceMotion ? "instant" : "smooth",
-                })
-              }
               aria-label="Back to top"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-foreground transition-all duration-300 hover:-translate-y-1 hover:border-brand-purple hover:bg-brand-purple hover:text-white"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground transition-all duration-300 hover:border-brand-gold hover:bg-brand-gold hover:text-white"
             >
-              <ArrowUp size={18} />
-            </button>
+              <ArrowRight className="-rotate-90" size={17} />
+            </Link>
           </div>
         </div>
       </div>
